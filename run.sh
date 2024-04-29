@@ -43,7 +43,7 @@ case "$1" in
         ;;
     *)
         echo "Invalid argument: $1"
-        echo "Usage: $0 {test|start}"
+        echo "Usage: $0 {test|start|stop [--delete-volumes]}"
         exit 1
         ;;
 esac
