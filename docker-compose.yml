@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: "demouser"
+      POSTGRES_PASSWORD: "DemoPa$$$$"
+      POSTGRES_DB: "demodb"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  spring-app:
+    build:
+      context: ./spring
+      dockerfile: Dockerfile
+    container_name: spring-app
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/demodb
+      APP_NODE_URL: http://node-app:8081/
+    depends_on:
+      - postgres
+      - node-app
+
+  node-app:
+    build:
+      context: ./node
+      dockerfile: Dockerfile
+    container_name: node-app
+    restart: always
+    ports:
+      - "8081:8081"
+
+volumes:
+  postgres_data:
