@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#As provided in the email
 function run_test {
     echo "Running tests..."
     bash <(curl -s https://raw.githubusercontent.com/kkenan/basic-microservices/master/health_check.sh)
